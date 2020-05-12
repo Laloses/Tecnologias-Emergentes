@@ -1,11 +1,65 @@
 <html>
     <head>
-        <title>Sistema Experto</title>
-        <script src="https://cdn.jsdelivr.net/gh/Laloses/Tecnologias-Emergentes/Sistema experto/script.min.js"></script>
+        <link rel="shortcut icon" href="https://img.icons8.com/dusk/64/000000/medical-doctor.png"> 
+        <title>Doctor online</title>
+        <!--<style href="https://cdn.jsdelivr.net/gh/Laloses/Tecnologias-Emergentes/Sistema experto/style.min.css"></style>-->
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/d3cbbd7c2e.js" crossorigin="anonymous"></script>
+        <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+
     </head>
     <body>
-        <header></header>
+        <div class="fondo"></div>
+        <!--INTRO-->
+        <div class="cont-white">
+            <h1>Bienvenido a Doctor Online</h1>
+            <div>
+                <button class="btn btn-primary">Comenzar</button>
+            </div>
+        </div>
 
-        <footer></footer>
+        <!--Explicacion-->
+        <div class="cont-white" style="width: 42%; display:none">
+            <h1>¿Como funciona Doctor Online?</h1>
+            <p>Doctor Online recopila datos de los usuarios que ingresan a la aplicacion y los incorpora al sistema experto que maneja todos los registros de sintomas y enfermedades, de esta manera podemos inferir qué es lo que usted tiene.</p>
+            <p>¿Preparado para descubrir su enfermedad?</p>
+            <div>
+                <button class="btn btn-primary">Siguiente</button>
+            </div>
+        </div>
+
+        <!--Sintomas-->
+        <div class="cont-white" style="display: none;">
+            <h1>¿Qué sintomas tienes?</h1>
+            <div class="ui-widget">
+                <i class="fas fa-search"></i>
+                <input id="searchSintomas" placeholder="Ingresa un sintoma" class="border rounded-lg pl-8 pr-10" >
+                <i class="fas fa-plus ml-1"></i>
+            </div>
+            <div>
+            </div>
+            <div>
+                <button class="btn btn-primary mt-2">Siguiente</button>
+            </div>
+        </div>
+
+        <!--Resultados-->
+        <div class="cont-white" style="display: none;">
+            <h1>Lamentablemente...</h1>
+            <div>
+                <button class="btn btn-primary">Reiniciar</button>
+            </div>
+        </div>
+
+
+        <!--Bootstrap 4-->
+        <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <!--<script src="https://cdn.jsdelivr.net/gh/Laloses/Tecnologias-Emergentes/Sistema experto/script.min.js"></script>-->
+        <script src="script.js"></script>
     </body>
 </html>
