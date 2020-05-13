@@ -155,12 +155,12 @@ function revisarSintomas(){
     resultadosSintomas.push( [listaEnfermedades[3],hepatitis(sintomasElegidos)] );
     resultadosSintomas.push( [listaEnfermedades[4],tuberculosis(sintomasElegidos)] );
     resultadosSintomas.push( [listaEnfermedades[5],anemia(sintomasElegidos)] );
-    console.log(resultadosSintomas);
-    console.log(sintomasElegidos);
 
+    var flag=false;
     for(var i=0; i<resultadosSintomas.length; i++){
         var valor= resultadosSintomas[i];
         if(valor[1]){ //si es un resultado válido
+            flag=true;
             switch(listaEnfermedades[i]){
                 case "Gripe":
                     divResultadosSintomas.append("<div class='med'><span class=\"text-bold bb-2\">"+listaEnfermedades[i]+"</span></div>");
@@ -189,7 +189,10 @@ function revisarSintomas(){
             }
         }
     }
-    cargarDoc();
+    if(!flag)
+        divResultadosSintomas.append("<div class='med'><span class=\"text-bold\">No se pudo obtener un resultado. Intenta ser mas preciso.</span></div>");
+    else
+        cargarDoc();
 }
 function cargarMed(enf){
     switch(enf){
@@ -234,6 +237,8 @@ function cargarMed(enf){
     }
 }
 function cargarDoc(){
+    $("#verMed").toggle();
+    $("#verDoc").toggle();
     var doc="";
     for(var i=0; i<listaMedicinas.length; i++){
         switch(listaMedicinas[i]){
@@ -348,6 +353,8 @@ $("#reiniciar").click(function(){
     $(".ui-widget").next().html("");
     divResultadosSintomas.html("")
     divResultados.toggle("slide",{direction:"right"});
+    if($("#verMed").css("display") != "none") $("#verMed").toggle();
+    if($("#verDoc").css("display") != "none") $("#verDoc").toggle();
     divSintomas.toggle("slide",{directon:"right"});
     if( $("#medicamentos").css("display") != "none" ) $("#medicamentos").toggle("slide");
     if( $("#especialistas").css("display") != "none" ) $("#especialistas").toggle("slide",{direction:"right"});
