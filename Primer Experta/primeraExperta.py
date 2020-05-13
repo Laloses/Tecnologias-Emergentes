@@ -1,71 +1,86 @@
+from random import choice
 from experta import *
 
 class Usuario(Fact):
-    numeroCuenta = Field(int,mandatory=True)
-    pin = Field(int, mandatory=True)
-    numeroTarjeta = Field(int, mandatory=True)
-    saldoCuenta = Field(int, mandatory=True)
-
-    def setNumCuenta(self,numC):
-        numeroCuenta = numC
-
-    def setPin(self,p):
-        pin = p
-
-    def setNumTarjeta(self,numT):
-        numeroTarjeta = numT
+    numeroTarjeta = Field(str, mandatory=True)
+    numeroCuenta = Field(str,mandatory=True)
+    nip = Field(str, mandatory=True)
+    saldoCuenta = 0
 
     def setSaldoCuenta(self,sa):
-        saldoCuenta = sa
+        self.saldoCuenta = sa
+
+    def getSaldoCuenta(self):
+        return self.saldoCuenta
 
 class Cajero(KnowledgeEngine):
-    @DefFacts()
-    def setSaldoCajero(self,cantidad):
-        yield Fact(saldoCajero=cantidad)
-        
-    @DefFacts()
-    def setRetiro(self,cantRetiro):
-        yield Fact(retiro=cantRetiro)
+    saldoCajero=choice([1000,5000,7000])
+    cantRetiro=0
+    #saldoCuenta (suficiente)
+    u = Usuario()
+    u.setSaldoCuenta(choice([2000,4000,7000]))
 
-    # Aqui se analiza la regla
-    #(tarjeta(funciona) V CB(SI) ) ^ NIP(correcto) ^ retiro(valido) ^ saldoCuenta (suficiente) ^ SaldoCajero(suficiente)
+    @DefFacts()
+    def setSaldoCajero(self):
+        if self.saldoCajero > 0 :
+            yield Fact(saldoCajero="valido")
+        else :
+            yield Fact(saldoCajero="invalido")
+    
+    @DefFacts()
+    def setRetiro(self):
+        if self.cantRetiro <= self.saldoCajero :
+            yield Fact(retiro="valido")
+        else :
+            yield Fact(retiro="invalido")
+            print("Haciendo un retiro de {money}\nEl cajero tiene {sc}".format(
+                money=self.cantRetiro,sc=self.saldoCajero))
+
+    # Se analiza las regla
+    #(numeroTarjeta(valida) V numeroCuenta(valida) ) ^ NIP(correcto) 
     @Rule(
-        Usuario( numeroTarjeta=MATCH.nt ) |
-        Usuario( numeroCuenta=MATCH.nc ),
-        Usuario( pin=MATCH.nc ),
-        AS.r << Fact(retiro=MATCH.r),
-        TEST( r <= saldoCajero ),
-        Usuario( saldoCuenta=MATCH.sc ),
-        TEST( sc >= r ),
-        TEST( saldoCajero > 0)
+        Usuario( numeroTarjeta="valida" ) | Usuario( numeroCuenta="valida" ),
+        Usuario( nip="correcto" )
     )
-    #En caso de que si se cumpla la regla ejecuta la funcion
-    def retiro_exitoso(self, r, sc):
-        print("Retiro exitoso de {retiro}, su cuenta se queda con {saldoCuenta}".format(
-            retiro=r, saldoCajero=sc))
+    def cuenta_valida(self):
+        Fact(cuenta_valida="valida")
+        print("Su cuenta es válida. Usted tiene {sc}".format(sc=self.u.getSaldoCuenta() ))
 
+        if self.u.getSaldoCuenta() >= self.cantRetiro :
+            Fact(saldoCuentaU="suficiente")
+        else :
+            Fact(saldoCuentaU="insuficiente")
+            print("Su cuenta no tiene tanto dinero. Tiene {sc}".format(sc=self.u.getSaldoCuenta() ))
+
+    #Se analiza la regla 
+    #saldoCuenta (suficiente) ^ SaldoCajero(suficiente)
+    @Rule(
+        Fact(cuenta_valida="valida"),
+        Fact(saldoCuentaU="suficiente"),
+        Fact(saldoCajero="suficiente")
+    )
+    def retiro_valido(self):
+        Fact(retiro="valido")
+
+    #Se analiza la regla 
+    # retiro(valido)
+    @Rule(Fact(retiro="valido"))
+    def retiro_exitoso(self):
+        print("Saldo del cajero: {sc}".format(sc=self.saldoCajero))
+        resta= self.u.saldoCuenta
+        resta-= self.cantRetiro
+        print("Retiro exitoso, su cuenta se queda con {sc}".format( sc= resta ))
 
 c = Cajero()
-u = Usuario()
-c.setSaldoCajero(15000)
-u.setSaldoCuenta(5000)
-
-print("Ingrese el valor de su retiro:")
-c.setRetiro(input())
-
-print("¿Retiro de tarjeta o Cuenta bancaria? (1/0)")
-res = input()
-if res == "1":
-    print("Ingrese el numero de tarjeta:")
-    u.setNumTarjeta(input())
-elif res == "0":
-    print("Ingrese el numero cuenta:")
-    u.setNumCuenta(input())
-
-print("Introduzca su pin:")
-u.setPin(input())
-
-print("Ingrese el valor de su retiro:")
-c.setRetiro(input())
 c.reset()
+c.setSaldoCajero()
+
+#(numeroTarjeta(valida) V numeroCuenta(valida) ) ^ NIP(correcto) 
+c.declare(Usuario(numeroTarjeta="valida",
+                numeroCuenta="invalida",
+                nip="correcto") )
+
+print("Ingrese la cantidad de retiro:")
+c.cantRetiro = int(input())
+
 c.run()
