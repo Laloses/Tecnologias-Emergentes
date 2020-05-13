@@ -1,5 +1,6 @@
-<html>
+<html lang="es">
     <head>
+        <meta charset="UTF-8">
         <link rel="shortcut icon" href="https://img.icons8.com/dusk/64/000000/medical-doctor.png"> 
         <title>Doctor online</title>
         <!--<style href="https://cdn.jsdelivr.net/gh/Laloses/Tecnologias-Emergentes/Sistema experto/style.min.css"></style>-->
@@ -20,7 +21,7 @@
         </div>
 
         <!--Explicacion-->
-        <div class="cont-white" style="width: 42%; display:none">
+        <div class="cont-white" style="width: 50%; display:none">
             <h1>¿Como funciona Doctor Online?</h1>
             <p>Doctor Online recopila datos de los usuarios que ingresan a la aplicacion y los incorpora al sistema experto que maneja todos los registros de sintomas y enfermedades, de esta manera podemos inferir qué es lo que usted tiene.</p>
             <p>¿Preparado para descubrir su enfermedad?</p>
@@ -30,14 +31,14 @@
         </div>
 
         <!--Sintomas-->
-        <div class="cont-white" style="display: none;">
+        <div class="cont-white" style="width: 40%; display: none;">
             <h1>¿Qué sintomas tienes?</h1>
             <div class="ui-widget">
                 <i class="fas fa-search"></i>
-                <input id="searchSintomas" placeholder="Ingresa un sintoma" class="border rounded-lg pl-8 pr-10" >
+                <input id="searchSintomas" placeholder="Ingresa un sintoma" class="border rounded-lg pl-1" >
                 <i class="fas fa-plus ml-1"></i>
             </div>
-            <div>
+            <div style="display: block; width: 100%;">
             </div>
             <div>
                 <button class="btn btn-primary mt-2">Siguiente</button>
@@ -46,12 +47,42 @@
 
         <!--Resultados-->
         <div class="cont-white" style="display: none;">
-            <h1>Lamentablemente...</h1>
+            <h1>Tus resultados</h1>
             <div>
-                <button class="btn btn-primary">Reiniciar</button>
+                <span>De acuerdo a los datos que has ingresado, hemos detectado la posibilidad de que tengas uno de las siguientes enfermedades:</span>
+            </div>
+            <div class="mb-3" style="display: block;"></div>
+            <div class="mb-2">
+                <i class="fas fa-pills"></i>
+                <button id="verMed" class="btn btn-primary ml-1 mr-1">
+                    ¿Que medicamento puedo tomar?
+                </button>
+                <i class="fas fa-pills"></i>
+            </div>
+            <div class="mb-2">
+                <i class="fas fa-user-md"></i>
+                <button id="verDoc" class="btn btn-primary ml-1 mr-1">
+                    ¿Quien me puede ayudar?
+                </button>
+                <i class="fas fa-user-md"></i>
+            </div>
+            <div>
+                <button id="reiniciar" class="btn btn-primary">Reiniciar</button>
+            </div>
+            <div>
+                <span>Recuerda que esto es solo una probabilidad, para un mejor diagnostico visita tu doctor.</span>
             </div>
         </div>
 
+        <!--Medicamentos-->
+        <div id="medicamentos" style="display: none;">
+            <h2>Medicamentos</h2>
+        </div>
+
+        <!--Especialistas-->
+        <div id="especialistas" style="display: none;">
+            <h2>Especialistas</h2>
+        </div>
 
         <!--Bootstrap 4-->
         <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
